@@ -1,7 +1,7 @@
 # Soske
 
 **Soske** (*Stephen's Old-School Key Engine*, pronounced sos*kay*) is a command-line key-value store written in [Go 1.20][gver] by [Stephen Malone][stvm].
-It's designed to be a simple, robust, portable plaintext data-dumpster.
+It's designed to be a simple, portable plaintext data-dumpster.
 
 ```bash
 # TODO: A slick Asciinema demo.
@@ -19,7 +19,7 @@ go install github.com/wirehaiku/Soske@latest
 
 ## Configuration.
 
-Soske stores all its data in a single [Bolt][bolt] database in either the [`$XDG_CONFIG_HOME`][xdgs] or [`%APPDATA%`][appd], depending on platform.
+Soske stores all its data in a single [Bolt][bolt] database in either [`$XDG_CONFIG_HOME`][xdgs] or [`%APPDATA%`][appd], depending on platform.
 The database itself is an open standard and there are commands to easily import and export your data.
 
 ## Commands
@@ -96,7 +96,7 @@ bar
 ## Contributing
 
 - Please submit bug reports and feature requests to the [issue tracker][bugs].
-- Soske's only dependencies are [Bolt][bolt] and [Testify][test].
+- Soske's only dependencies are [Bolt][bolt] (database) and [Testify][test] (unit testing). 
 - The `extra` directory contains helper scripts for building and testing Soske.
 
 [appd]: https://ss64.com/nt/syntax-variables.html
