@@ -30,7 +30,7 @@ On success, commands print the requested data or nothing; on failure they print 
 ### `lst SUBSTRINGS...`
 
 List all existing keys containing a substring, or all keys if no arguments are provided.
-Arguments starting with `!` invert the filter, multiple arguments apply multiple filters.
+Arguments starting with `!` list keys that *don't* contain the substring, multiple arguments apply multiple filters.
 
 ```
 $ soske lst
@@ -74,17 +74,25 @@ $ soske del alpha
 
 ### `exp FILES...`
 
-Export the entire database as compact JSON to each file.
+Export the entire database as pretty-printed JSON to each file.
 
 ```
 $ soske exp test.json
 $ cat test.json
-{"alpha": "Aye aye aye!"}
+{
+    "alpha": {
+        "body": "Aye aye aye!",
+        "hash": "929c3d93e2a04929d950ef633bca7465045527bee16efb71de7e30a68dd332b5",
+        "time": "943920000"
+    },
+    ...
+}
 ```
 
 ### `imp FILES...`
 
 Import each JSON file into the database.
+The JSON object must be a flat string-to-string dictionary.
 
 ```
 $ echo '{"alpha": "Aye aye aye!"}' > test.json
