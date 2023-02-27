@@ -17,7 +17,7 @@ go install github.com/wirehaiku/Soske@latest
 
 ...or download the [latest release][rels] for your platform.
 
-## Configuration.
+## Configuration
 
 Soske stores all its data in a single [Bolt][bolt] database in either [`$XDG_CONFIG_HOME`][xdgs] or [`%APPDATA%`][appd], depending on your platform.
 The database itself is an open standard and there are commands to easily import and export your data.
