@@ -27,13 +27,28 @@ The database itself is an open standard and there are commands to easily import 
 Soske's syntax uses the form `soske <command> <args...>` and is always variadic, meaning you can include multiple final arguments to apply the command multiple times.
 On success, commands print the requested data or nothing; on failure they print an error message in the form of `Error: <error>.`.
 
+### `lst SUBSTRINGS...`
+
+List all existing keys containing a substring, or all keys if no arguments are provided.
+Arguments starting with `!` negate the filter, multiple arguments apply multiple filters.
+
+```
+$ soske lst
+alpha
+bravo
+charlie
+
+$ soske !alpha !bravo
+charlie
+```
+
 ### `get KEYS...`
 
 Print the value of each key if it exists, or do nothing:
 
 ```
-$ soske get foo
-Bar bar bar bar Barbara Ann...
+$ soske get alpha
+Aye aye aye! 
 ```
 
 ### `set KEY VALUES...`
@@ -42,8 +57,8 @@ Set the value of a new or existing key.
 Multiple arguments are combined into a single newline-separated value.
 
 ```
-$ soske set foo one two three
-$ soske get foo
+$ soske set alpha one two three
+$ soske get alpha
 one
 two
 three
@@ -54,24 +69,8 @@ three
 Delete each key if it exists, or do nothing:
 
 ```
-$ soske del foo
+$ soske del alpha
 ```
-
-### `lst SUBSTRINGS...`
-
-List all existing keys containing a substring, or all keys if no arguments are provided.
-Multiple arguments repeatedly filter the list.
-
-```
-$ soske lst
-foo
-bar
-baz
-
-$ soske lst ba ar
-bar
-```
-
 
 ### `exp FILES...`
 
@@ -80,7 +79,7 @@ Export the entire database as compact JSON to each file.
 ```
 $ soske exp test.json
 $ cat test.json
-{"foo":"bar"}
+{"alpha": "Aye aye aye!"}
 ```
 
 ### `imp FILES...`
@@ -88,10 +87,10 @@ $ cat test.json
 Import each JSON file into the database.
 
 ```
-$ echo '{"foo":"bar"}' > test.json
+$ echo '{"alpha": "Aye aye aye!"}' > test.json
 $ soske imp test.json
-$ soske get foo
-bar
+$ soske get alpha
+Aye aye aye!
 ```
 
 ## Contributing
