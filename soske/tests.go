@@ -19,10 +19,10 @@ var TestData = map[string]map[string]string{
 // TestDB returns an open Bolt database populated with test data. The database file is
 // automatically deleted after 200 milliseconds.
 func TestDB() *bbolt.DB {
-	path, _ := os.CreateTemp("", "soske-test-db-*")
-	defer path.Close()
+	file, _ := os.CreateTemp("", "soske-test-db-*")
+	defer file.Close()
 
-	db, _ := bbolt.Open(path.Name(), 0755, nil)
+	db, _ := bbolt.Open(file.Name(), 0755, nil)
 	db.Update(func(tx *bbolt.Tx) error {
 		for bucket, keymap := range TestData {
 			obj, _ := tx.CreateBucket([]byte(bucket))
@@ -35,7 +35,7 @@ func TestDB() *bbolt.DB {
 
 	go func() {
 		time.Sleep(200 * time.Millisecond)
-		os.Remove(path.Name())
+		os.Remove(file.Name())
 	}()
 
 	return db
