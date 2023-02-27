@@ -27,14 +27,6 @@ The database itself is an open standard and there are commands to easily import 
 Soske's syntax uses the form `soske <command> <args...>` and is always variadic, meaning you can include multiple final arguments to apply the command multiple times.
 On success, commands print the requested data or nothing; on failure they print an error message in the form of `Error: <error>.`.
 
-### `del KEYS...`
-
-Delete each key if it exists, or do nothing:
-
-```
-$ soske del foo
-```
-
 ### `get KEYS...`
 
 Print the value of each key if it exists, or do nothing:
@@ -55,6 +47,14 @@ $ soske get foo
 one
 two
 three
+```
+
+### `del KEYS...`
+
+Delete each key if it exists, or do nothing:
+
+```
+$ soske del foo
 ```
 
 ### `lst SUBSTRINGS...`
