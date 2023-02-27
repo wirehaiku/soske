@@ -1,6 +1,6 @@
 # Soske
 
-**Soske** (*Stephen's Old-School Key Engine*, pronounced sos*kay*) is a command-line key-value store written in [Go 1.20][gver] by [Stephen Malone][stvm].
+**Soske** (*Stephen's Old-School Key Engine*, pronounced *sos·kay*) is a command-line key-value store written in [Go 1.20][gver] by [Stephen Malone][stvm].
 It's designed to be a simple, portable plaintext data-dumpster.
 
 ```bash
@@ -19,7 +19,7 @@ go install github.com/wirehaiku/Soske@latest
 
 ## Configuration.
 
-Soske stores all its data in a single [Bolt][bolt] database in either [`$XDG_CONFIG_HOME`][xdgs] or [`%APPDATA%`][appd], depending on platform.
+Soske stores all its data in a single [Bolt][bolt] database in either [`$XDG_CONFIG_HOME`][xdgs] or [`%APPDATA%`][appd], depending on your platform.
 The database itself is an open standard and there are commands to easily import and export your data.
 
 ## Commands
@@ -74,17 +74,17 @@ bar
 
 ### `exp FILES...`
 
-Export the entire database in compact JSON to each file.
+Export the entire database as compact JSON to each file.
 
 ```
 $ soske exp test.json
 $ cat test.json
-{"foo": "bar"}
+{"foo":"bar"}
 ```
 
 ### `imp TYPE FILES...`
 
-Import each file as JSON to the database.
+Import each JSON file into the database.
 
 ```
 $ echo '{"foo":"bar"}' > test.json
