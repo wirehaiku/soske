@@ -8,14 +8,14 @@ import (
 
 func TestCleanKey(t *testing.T) {
 	// success
-	key := CleanKey("\tFOO\n")
-	assert.Equal(t, "foo", key)
+	key := CleanKey("\tKEY\n")
+	assert.Equal(t, "key", key)
 }
 
 func TestCleanKeys(t *testing.T) {
 	// success
-	keys := CleanKeys([]string{"\tFOO\n"})
-	assert.Equal(t, []string{"foo"}, keys)
+	keys := CleanKeys([]string{"\tKEY\n"})
+	assert.Equal(t, []string{"key"}, keys)
 }
 
 func TestCleanPath(t *testing.T) {
