@@ -30,7 +30,7 @@ On success, commands print the requested data or nothing; on failure they print 
 ### `lst SUBSTRINGS...`
 
 List all existing keys containing a substring, or all keys if no arguments are provided.
-Arguments starting with `!` negate the filter, multiple arguments apply multiple filters.
+Arguments starting with `!` invert the filter, multiple arguments apply multiple filters.
 
 ```
 $ soske lst
@@ -38,7 +38,7 @@ alpha
 bravo
 charlie
 
-$ soske !alpha !bravo
+$ soske !alpha !rav
 charlie
 ```
 
