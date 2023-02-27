@@ -4,7 +4,7 @@
 It's designed to be a simple, robust, portable plaintext data-dumpster.
 
 ```bash
-# TODO: A slice Asciinema demo.
+# TODO: A slick Asciinema demo.
 ```
 
 ## Installation
@@ -19,12 +19,12 @@ go install github.com/wirehaiku/Soske@latest
 
 ## Configuration.
 
-Soske stores all its data in a single [Bolt][bolt] database in either the [`$XDG_CONFIG_HOME`][xdgs] or [`%APPDATA%`][appd] directories, depending on platform.
+Soske stores all its data in a single [Bolt][bolt] database in either the [`$XDG_CONFIG_HOME`][xdgs] or [`%APPDATA%`][appd], depending on platform.
 The database itself is an open standard and there are commands to easily import and export your data.
 
 ## Commands
 
-Soske's syntax uses the form `$ soske <command> <args...>` and is always variadic, meaning you can include multiple final arguments to apply the command multiple times.
+Soske's syntax uses the form `soske <command> <args...>` and is always variadic, meaning you can include multiple final arguments to apply the command multiple times.
 
 ### `del KEYS...`
 
