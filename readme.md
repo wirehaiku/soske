@@ -25,6 +25,7 @@ The database itself is an open standard and there are commands to easily import 
 ## Commands
 
 Soske's syntax uses the form `soske <command> <args...>` and is always variadic, meaning you can include multiple final arguments to apply the command multiple times.
+On success, commands print the requested data or nothing; on failure they print an error message in the form of `Error: <error>.`.
 
 ### `del KEYS...`
 
@@ -82,7 +83,7 @@ $ cat test.json
 {"foo":"bar"}
 ```
 
-### `imp TYPE FILES...`
+### `imp FILES...`
 
 Import each JSON file into the database.
 
