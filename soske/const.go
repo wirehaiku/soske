@@ -13,8 +13,8 @@ const (
 var (
 	// DefaultPaths is a map of operating systems to default storage paths.
 	DefaultPaths = map[string][]string{
-		"linux":   {"$XDG_CONFIG_HOME", "soske/soske.db"},
-		"windows": {"$APPDATA", "soske/soske.db"},
+		"linux":   {"XDG_CONFIG_HOME", "soske/soske.db"},
+		"windows": {"APPDATA", "soske/soske.db"},
 	}
 
 	// Version is a description of Soske's current version.

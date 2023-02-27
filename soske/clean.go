@@ -34,15 +34,15 @@ func CleanPaths(paths []string) []string {
 }
 
 // CleanValue returns a clean value string.
-func CleanValue(value string) string {
-	return strings.TrimSpace(value)
+func CleanValue(val string) string {
+	return strings.TrimSpace(val)
 }
 
 // CleanValues returns a slice of clean value strings.
-func CleanValues(values []string) []string {
-	for n, value := range values {
-		values[n] = CleanValue(value)
+func CleanValues(vals []string) []string {
+	for n, val := range vals {
+		vals[n] = CleanValue(val)
 	}
 
-	return values
+	return vals
 }

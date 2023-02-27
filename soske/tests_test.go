@@ -12,9 +12,9 @@ func TestTestDB(t *testing.T) {
 	// success - database exists
 	db := TestDB()
 	db.View(func(tx *bbolt.Tx) error {
-		obj := tx.Bucket([]byte("storage"))
-		value := obj.Get([]byte("alpha"))
-		assert.Equal(t, []byte("Alpha value."), value)
+		obj := tx.Bucket([]byte("alpha"))
+		val := obj.Get([]byte("body"))
+		assert.Equal(t, []byte("Alpha value."), val)
 		return nil
 	})
 

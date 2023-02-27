@@ -9,10 +9,15 @@ import (
 
 // TestData is a map of default testing data.
 var TestData = map[string]map[string]string{
-	"storage": {
-		"alpha":   "Alpha value.",
-		"bravo":   "Bravo value.",
-		"charlie": "Charlie value.",
+	"alpha": {
+		"body": "Alpha value.",
+		"hash": "49e8c3bb0a4c0773b54af4aee638ef128c5dceae19b2e5adba57f0bdc33d4840",
+		"time": "943920000",
+	},
+	"bravo": {
+		"body": "Bravo value.",
+		"hash": "e628d55d2c5c5e47bda1fbb4fe8c8a365eb12c89d2745346216e20cad0b4a0c3",
+		"time": "943923600",
 	},
 }
 
@@ -24,10 +29,10 @@ func TestDB() *bbolt.DB {
 
 	db, _ := bbolt.Open(file.Name(), 0755, nil)
 	db.Update(func(tx *bbolt.Tx) error {
-		for bucket, keymap := range TestData {
-			obj, _ := tx.CreateBucket([]byte(bucket))
-			for key, value := range keymap {
-				obj.Put([]byte(key), []byte(value))
+		for bkt, bmap := range TestData {
+			obj, _ := tx.CreateBucket([]byte(bkt))
+			for key, val := range bmap {
+				obj.Put([]byte(key), []byte(val))
 			}
 		}
 		return nil

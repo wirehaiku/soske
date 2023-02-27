@@ -32,12 +32,12 @@ func TestCleanPaths(t *testing.T) {
 
 func TestCleanValue(t *testing.T) {
 	// success
-	value := CleanValue("\tvalue\n")
-	assert.Equal(t, "value", value)
+	val := CleanValue("\tvalue\n")
+	assert.Equal(t, "value", val)
 }
 
 func TestCleanValues(t *testing.T) {
 	// success
-	values := CleanValues([]string{"\tvalue\n"})
-	assert.Equal(t, []string{"value"}, values)
+	vals := CleanValues([]string{"\tvalue\n"})
+	assert.Equal(t, []string{"value"}, vals)
 }
