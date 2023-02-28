@@ -2,7 +2,6 @@ package soske
 
 import (
 	"fmt"
-	"sort"
 
 	"go.etcd.io/bbolt"
 )
@@ -11,77 +10,75 @@ import (
 func Connect(path string) (*bbolt.DB, error) {
 	db, err := bbolt.Open(path, 0755, nil)
 	if err != nil {
-		return nil, fmt.Errorf("cannot open database %q", path)
+		return nil, fmt.Errorf("cannot connect to database %q", path)
 	}
 
 	return db, nil
 }
 
-// DelKey deletes an existing key from a bucket.
-func DelKey(db *bbolt.DB, bucket, key string) error {
-	err := db.Update(func(tx *bbolt.Tx) error {
-		obj, err := tx.CreateBucketIfNotExists([]byte(bucket))
-		if err != nil {
-			return err
+// DeleteBucket deletes an existing bucket from a database.
+func DeleteBucket(db *bbolt.DB, bkt string) error {
+	return db.Update(func(tx *bbolt.Tx) error {
+		if tx.Bucket([]byte(bkt)) != nil {
+			if err := tx.DeleteBucket([]byte(bkt)); err != nil {
+				return fmt.Errorf("cannot delete bucket %q", bkt)
+			}
 		}
-		return obj.Delete([]byte(key))
-	})
 
-	if err != nil {
-		return fmt.Errorf("cannot update database %q", db.Path())
-	}
-
-	return nil
-}
-
-// GetKey returns the value of an existing key in a bucket.
-func GetKey(db *bbolt.DB, bucket, key string) (string, error) {
-	var value string
-	err := db.View(func(tx *bbolt.Tx) error {
-		obj := tx.Bucket([]byte(bucket))
-		value = string(obj.Get([]byte(key)))
 		return nil
 	})
-
-	if err != nil {
-		return "", fmt.Errorf("cannot read database %q", db.Path())
-	}
-
-	return CleanValue(value), nil
 }
 
-// ListKeys returns all existing keys in a bucket.
-func ListKeys(db *bbolt.DB, bucket string) ([]string, error) {
-	var keys []string
-	err := db.View(func(tx *bbolt.Tx) error {
-		obj := tx.Bucket([]byte(bucket))
-		return obj.ForEach(func(key, _ []byte) error {
-			keys = append(keys, string(key))
+// GetBucket returns an existing bucket from a database.
+func GetBucket(db *bbolt.DB, bkt string) (map[string]string, error) {
+	bmap := make(map[string]string)
+	return bmap, db.View(func(tx *bbolt.Tx) error {
+		if obj := tx.Bucket([]byte(bkt)); obj != nil {
+			err := obj.ForEach(func(key, val []byte) error {
+				bmap[string(key)] = string(val)
+				return nil
+			})
+
+			if err != nil {
+				return fmt.Errorf("cannot get bucket %q", bkt)
+			}
+		}
+
+		return nil
+	})
+}
+
+// ListBuckets returns the names of all buckets in the database.
+func ListBuckets(db *bbolt.DB) ([]string, error) {
+	var bkts []string
+	return bkts, db.View(func(tx *bbolt.Tx) error {
+		err := tx.ForEach(func(name []byte, _ *bbolt.Bucket) error {
+			bkts = append(bkts, string(name))
 			return nil
 		})
+
+		if err != nil {
+			return fmt.Errorf("cannot list buckets")
+		}
+
+		return nil
 	})
-
-	if err != nil {
-		return nil, fmt.Errorf("cannot read database %q", db.Path())
-	}
-
-	sort.Strings(keys)
-	return keys, nil
 }
 
-// SetKey sets the value of a new or existing key in a bucket.
-func SetKey(db *bbolt.DB, bucket, key, value string) error {
-	err := db.Update(func(tx *bbolt.Tx) error {
-		obj, err := tx.CreateBucketIfNotExists([]byte(bucket))
+// SetBucket sets a new or existing bucket in the database.
+func SetBucket(db *bbolt.DB, bkt string, bmap map[string]string) error {
+	return db.Update(func(tx *bbolt.Tx) error {
+		obj, err := tx.CreateBucketIfNotExists([]byte(bkt))
 		if err != nil {
-			return err
+			return fmt.Errorf("cannot create bucket %q", bkt)
 		}
-		return obj.Put([]byte(key), []byte(CleanValue(value)))
+
+		for key, val := range bmap {
+			if err := obj.Put([]byte(key), []byte(val)); err != nil {
+				return fmt.Errorf("cannot set key in bucket %q", bkt)
+			}
+		}
+
+		return nil
 	})
-
-	if err != nil {
-		return fmt.Errorf("cannot Update database %q", db.Path())
-	}
-
-	return nil
 }

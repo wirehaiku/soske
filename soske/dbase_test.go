@@ -20,52 +20,51 @@ func TestConnect(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-func TestDelKey(t *testing.T) {
+func TestDeleteBucket(t *testing.T) {
 	// setup
 	db := TestDB()
 
 	// success
-	err := DelKey(db, "storage", "alpha")
+	err := DeleteBucket(db, "alpha")
 	assert.NoError(t, err)
 	db.View(func(tx *bbolt.Tx) error {
-		obj := tx.Bucket([]byte("storage"))
-		value := obj.Get([]byte("alpha"))
-		assert.Empty(t, value)
+		obj := tx.Bucket([]byte("alpha"))
+		assert.Nil(t, obj)
 		return nil
 	})
 }
 
-func TestGetKey(t *testing.T) {
+func TestGetBucket(t *testing.T) {
 	// setup
 	db := TestDB()
 
 	// success
-	value, err := GetKey(db, "storage", "alpha")
-	assert.Equal(t, "Alpha value.", value)
+	bmap, err := GetBucket(db, "alpha")
+	assert.Equal(t, TestData["alpha"], bmap)
 	assert.NoError(t, err)
 }
 
-func TestListKeys(t *testing.T) {
+func TestListBuckets(t *testing.T) {
 	// setup
 	db := TestDB()
 
 	// success
-	keys, err := ListKeys(db, "storage")
-	assert.Equal(t, []string{"alpha", "bravo", "charlie"}, keys)
+	bkts, err := ListBuckets(db)
+	assert.Equal(t, []string{"alpha", "bravo"}, bkts)
 	assert.NoError(t, err)
 }
 
-func TestSetKey(t *testing.T) {
+func TestSetBucket(t *testing.T) {
 	// setup
 	db := TestDB()
 
 	// success
-	err := SetKey(db, "storage", "alpha", "newvalue")
+	err := SetBucket(db, "test", map[string]string{"key": "value"})
 	assert.NoError(t, err)
 	db.View(func(tx *bbolt.Tx) error {
-		obj := tx.Bucket([]byte("storage"))
-		value := obj.Get([]byte("alpha"))
-		assert.Equal(t, []byte("newvalue"), value)
+		obj := tx.Bucket([]byte("test"))
+		val := obj.Get([]byte("key"))
+		assert.Equal(t, []byte("value"), val)
 		return nil
 	})
 }
