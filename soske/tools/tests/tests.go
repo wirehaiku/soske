@@ -1,4 +1,4 @@
-package soske
+package tests
 
 import (
 	"os"
@@ -7,8 +7,8 @@ import (
 	"go.etcd.io/bbolt"
 )
 
-// TestData is a map of default testing data.
-var TestData = map[string]map[string]string{
+// Data is a map of default testing data.
+var Data = map[string]map[string]string{
 	"alpha": {
 		"body": "Alpha value.",
 		"hash": "49e8c3bb0a4c0773b54af4aee638ef128c5dceae19b2e5adba57f0bdc33d4840",
@@ -21,15 +21,15 @@ var TestData = map[string]map[string]string{
 	},
 }
 
-// TestDB returns an open Bolt database populated with test data. The database file is
+// DB returns an open Bolt database populated with test data. The database file is
 // automatically deleted after 200 milliseconds.
-func TestDB() *bbolt.DB {
-	file, _ := os.CreateTemp("", "soske-test-db-*")
+func DB() *bbolt.DB {
+	file, _ := os.CreateTemp("", "soske-test-*.db")
 	defer file.Close()
 
 	db, _ := bbolt.Open(file.Name(), 0755, nil)
 	db.Update(func(tx *bbolt.Tx) error {
-		for bkt, bmap := range TestData {
+		for bkt, bmap := range Data {
 			obj, _ := tx.CreateBucket([]byte(bkt))
 			for key, val := range bmap {
 				obj.Put([]byte(key), []byte(val))

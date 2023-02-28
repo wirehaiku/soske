@@ -1,4 +1,4 @@
-package soske
+package tests
 
 import (
 	"testing"
@@ -8,9 +8,9 @@ import (
 	"go.etcd.io/bbolt"
 )
 
-func TestTestDB(t *testing.T) {
+func TestDB(t *testing.T) {
 	// success - database exists
-	db := TestDB()
+	db := DB()
 	db.View(func(tx *bbolt.Tx) error {
 		obj := tx.Bucket([]byte("alpha"))
 		val := obj.Get([]byte("body"))
