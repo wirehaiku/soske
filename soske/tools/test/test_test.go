@@ -7,13 +7,22 @@ import (
 	"go.etcd.io/bbolt"
 )
 
-func TestAssertDB(t *testing.T) {
+func TestAssertBucket(t *testing.T) {
 	// setup
 	db := MakeDB()
 	defer KillDB(db)
 
 	// success
-	AssertDB(t, db, "alpha", TestData["alpha"])
+	AssertBucket(t, db, "alpha", TestData["alpha"])
+}
+
+func TestAssertNoBucket(t *testing.T) {
+	// setup
+	db := MakeDB()
+	defer KillDB(db)
+
+	// success
+	AssertNoBucket(t, db, "nope")
 }
 
 func TestKillDB(t *testing.T) {

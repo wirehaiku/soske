@@ -23,8 +23,8 @@ var TestData = map[string]map[string]string{
 	},
 }
 
-// AssertDB asserts the contents of a database bucket.
-func AssertDB(t *testing.T, db *bbolt.DB, name string, bmap map[string]string) {
+// AssertBucket asserts the contents of a database bucket.
+func AssertBucket(t *testing.T, db *bbolt.DB, name string, bmap map[string]string) {
 	db.View(func(tx *bbolt.Tx) error {
 		buck := tx.Bucket([]byte(name))
 		assert.NotNil(t, buck)
@@ -32,6 +32,15 @@ func AssertDB(t *testing.T, db *bbolt.DB, name string, bmap map[string]string) {
 			assert.Equal(t, bmap[string(key)], string(val))
 			return nil
 		})
+	})
+}
+
+// AssertNoBucket asserts the non-existence of a database bucket.
+func AssertNoBucket(t *testing.T, db *bbolt.DB, name string) {
+	db.View(func(tx *bbolt.Tx) error {
+		buck := tx.Bucket([]byte(name))
+		assert.Nil(t, buck)
+		return nil
 	})
 }
 
