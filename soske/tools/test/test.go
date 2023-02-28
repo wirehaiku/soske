@@ -3,13 +3,14 @@ package test
 
 import (
 	"os"
-	"time"
+	"testing"
 
+	"github.com/stretchr/testify/assert"
 	"go.etcd.io/bbolt"
 )
 
-// Data is a map of default testing data.
-var Data = map[string]map[string]string{
+// TestData is a map of default testing data.
+var TestData = map[string]map[string]string{
 	"alpha": {
 		"body": "Alpha value.",
 		"hash": "49e8c3bb0a4c0773b54af4aee638ef128c5dceae19b2e5adba57f0bdc33d4840",
@@ -22,27 +23,39 @@ var Data = map[string]map[string]string{
 	},
 }
 
-// DB returns an open Bolt database populated with test data. The database file is
-// automatically deleted after 200 milliseconds.
-func DB() *bbolt.DB {
+// AssertDB asserts the contents of a database bucket.
+func AssertDB(t *testing.T, db *bbolt.DB, name string, bmap map[string]string) {
+	db.View(func(tx *bbolt.Tx) error {
+		buck := tx.Bucket([]byte(name))
+		assert.NotNil(t, buck)
+		return buck.ForEach(func(key, val []byte) error {
+			assert.Equal(t, bmap[string(key)], string(val))
+			return nil
+		})
+	})
+}
+
+// KillDB closes and deletes an open database.
+func KillDB(db *bbolt.DB) {
+	db.Close()
+	os.Remove(db.Path())
+}
+
+// MakeDB returns an open database populated with test data.
+func MakeDB() *bbolt.DB {
 	file, _ := os.CreateTemp("", "soske-test-*.db")
-	defer file.Close()
+	file.Close()
 
 	db, _ := bbolt.Open(file.Name(), 0755, nil)
 	db.Update(func(tx *bbolt.Tx) error {
-		for bkt, bmap := range Data {
-			obj, _ := tx.CreateBucket([]byte(bkt))
+		for name, bmap := range TestData {
+			buck, _ := tx.CreateBucket([]byte(name))
 			for key, val := range bmap {
-				obj.Put([]byte(key), []byte(val))
+				buck.Put([]byte(key), []byte(val))
 			}
 		}
 		return nil
 	})
-
-	go func() {
-		time.Sleep(200 * time.Millisecond)
-		os.Remove(file.Name())
-	}()
 
 	return db
 }
