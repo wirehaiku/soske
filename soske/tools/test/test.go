@@ -1,4 +1,5 @@
-package tests
+// Package test implements unit-testing definitions and helper functions.
+package test
 
 import (
 	"os"

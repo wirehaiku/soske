@@ -1,4 +1,5 @@
-package dbase
+// Package bolt implements Bolt database handling functions.
+package bolt
 
 import (
 	"fmt"
@@ -10,7 +11,7 @@ import (
 func Connect(path string) (*bbolt.DB, error) {
 	db, err := bbolt.Open(path, 0755, nil)
 	if err != nil {
-		return nil, fmt.Errorf("cannot connect to database %q", path)
+		return nil, fmt.Errorf("cannot connect to database %q: %w", path, err)
 	}
 
 	return db, nil
@@ -21,7 +22,7 @@ func Delete(db *bbolt.DB, bkt string) error {
 	return db.Update(func(tx *bbolt.Tx) error {
 		if tx.Bucket([]byte(bkt)) != nil {
 			if err := tx.DeleteBucket([]byte(bkt)); err != nil {
-				return fmt.Errorf("cannot delete bucket %q", bkt)
+				return fmt.Errorf("cannot delete bucket %q: %w", bkt, err)
 			}
 		}
 
@@ -40,7 +41,7 @@ func Get(db *bbolt.DB, bkt string) (map[string]string, error) {
 			})
 
 			if err != nil {
-				return fmt.Errorf("cannot get bucket %q", bkt)
+				return fmt.Errorf("cannot get bucket %q: %w", bkt, err)
 			}
 		}
 
@@ -58,7 +59,7 @@ func List(db *bbolt.DB) ([]string, error) {
 		})
 
 		if err != nil {
-			return fmt.Errorf("cannot list buckets")
+			return fmt.Errorf("cannot list buckets: %w", err)
 		}
 
 		return nil
@@ -70,12 +71,12 @@ func Set(db *bbolt.DB, bkt string, bmap map[string]string) error {
 	return db.Update(func(tx *bbolt.Tx) error {
 		obj, err := tx.CreateBucketIfNotExists([]byte(bkt))
 		if err != nil {
-			return fmt.Errorf("cannot create bucket %q", bkt)
+			return fmt.Errorf("cannot create bucket %q: %w", bkt, err)
 		}
 
 		for key, val := range bmap {
 			if err := obj.Put([]byte(key), []byte(val)); err != nil {
-				return fmt.Errorf("cannot set key in bucket %q", bkt)
+				return fmt.Errorf("cannot set key in bucket %q: %w", bkt, err)
 			}
 		}
 

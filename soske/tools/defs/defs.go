@@ -1,4 +1,5 @@
-package defns
+// Package defs implements program constants and definitions.
+package defs
 
 import "fmt"
 

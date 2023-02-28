@@ -1,11 +1,11 @@
-package dbase
+package bolt
 
 import (
 	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/wirehaiku/Soske/soske/tools/tests"
+	"github.com/wirehaiku/Soske/soske/tools/test"
 	"go.etcd.io/bbolt"
 )
 
@@ -23,7 +23,7 @@ func TestConnect(t *testing.T) {
 
 func TestDeleteBucket(t *testing.T) {
 	// setup
-	db := tests.DB()
+	db := test.DB()
 
 	// success
 	err := Delete(db, "alpha")
@@ -37,17 +37,17 @@ func TestDeleteBucket(t *testing.T) {
 
 func TestGetBucket(t *testing.T) {
 	// setup
-	db := tests.DB()
+	db := test.DB()
 
 	// success
 	bmap, err := Get(db, "alpha")
-	assert.Equal(t, tests.Data["alpha"], bmap)
+	assert.Equal(t, test.Data["alpha"], bmap)
 	assert.NoError(t, err)
 }
 
 func TestListBuckets(t *testing.T) {
 	// setup
-	db := tests.DB()
+	db := test.DB()
 
 	// success
 	bkts, err := List(db)
@@ -57,15 +57,16 @@ func TestListBuckets(t *testing.T) {
 
 func TestSetBucket(t *testing.T) {
 	// setup
-	db := tests.DB()
+	db := test.DB()
 
 	// success
-	err := Set(db, "test", map[string]string{"key": "value"})
+	err := Set(db, "test", test.Data["alpha"])
 	assert.NoError(t, err)
 	db.View(func(tx *bbolt.Tx) error {
 		obj := tx.Bucket([]byte("test"))
-		val := obj.Get([]byte("key"))
-		assert.Equal(t, []byte("value"), val)
-		return nil
+		return obj.ForEach(func(key, val []byte) error {
+			assert.Equal(t, test.Data["alpha"][string(key)], string(val))
+			return nil
+		})
 	})
 }
