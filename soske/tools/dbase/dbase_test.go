@@ -1,10 +1,11 @@
-package soske
+package dbase
 
 import (
 	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/wirehaiku/Soske/soske/tools/tests"
 	"go.etcd.io/bbolt"
 )
 
@@ -22,10 +23,10 @@ func TestConnect(t *testing.T) {
 
 func TestDeleteBucket(t *testing.T) {
 	// setup
-	db := TestDB()
+	db := tests.DB()
 
 	// success
-	err := DeleteBucket(db, "alpha")
+	err := Delete(db, "alpha")
 	assert.NoError(t, err)
 	db.View(func(tx *bbolt.Tx) error {
 		obj := tx.Bucket([]byte("alpha"))
@@ -36,30 +37,30 @@ func TestDeleteBucket(t *testing.T) {
 
 func TestGetBucket(t *testing.T) {
 	// setup
-	db := TestDB()
+	db := tests.DB()
 
 	// success
-	bmap, err := GetBucket(db, "alpha")
-	assert.Equal(t, TestData["alpha"], bmap)
+	bmap, err := Get(db, "alpha")
+	assert.Equal(t, tests.Data["alpha"], bmap)
 	assert.NoError(t, err)
 }
 
 func TestListBuckets(t *testing.T) {
 	// setup
-	db := TestDB()
+	db := tests.DB()
 
 	// success
-	bkts, err := ListBuckets(db)
+	bkts, err := List(db)
 	assert.Equal(t, []string{"alpha", "bravo"}, bkts)
 	assert.NoError(t, err)
 }
 
 func TestSetBucket(t *testing.T) {
 	// setup
-	db := TestDB()
+	db := tests.DB()
 
 	// success
-	err := SetBucket(db, "test", map[string]string{"key": "value"})
+	err := Set(db, "test", map[string]string{"key": "value"})
 	assert.NoError(t, err)
 	db.View(func(tx *bbolt.Tx) error {
 		obj := tx.Bucket([]byte("test"))

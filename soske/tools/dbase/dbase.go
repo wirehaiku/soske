@@ -1,4 +1,4 @@
-package soske
+package dbase
 
 import (
 	"fmt"
@@ -16,8 +16,8 @@ func Connect(path string) (*bbolt.DB, error) {
 	return db, nil
 }
 
-// DeleteBucket deletes an existing bucket from a database.
-func DeleteBucket(db *bbolt.DB, bkt string) error {
+// Delete deletes an existing bucket from a database.
+func Delete(db *bbolt.DB, bkt string) error {
 	return db.Update(func(tx *bbolt.Tx) error {
 		if tx.Bucket([]byte(bkt)) != nil {
 			if err := tx.DeleteBucket([]byte(bkt)); err != nil {
@@ -29,8 +29,8 @@ func DeleteBucket(db *bbolt.DB, bkt string) error {
 	})
 }
 
-// GetBucket returns an existing bucket from a database.
-func GetBucket(db *bbolt.DB, bkt string) (map[string]string, error) {
+// Get returns an existing bucket from a database.
+func Get(db *bbolt.DB, bkt string) (map[string]string, error) {
 	bmap := make(map[string]string)
 	return bmap, db.View(func(tx *bbolt.Tx) error {
 		if obj := tx.Bucket([]byte(bkt)); obj != nil {
@@ -48,8 +48,8 @@ func GetBucket(db *bbolt.DB, bkt string) (map[string]string, error) {
 	})
 }
 
-// ListBuckets returns the names of all buckets in the database.
-func ListBuckets(db *bbolt.DB) ([]string, error) {
+// List returns the names of all buckets in the database.
+func List(db *bbolt.DB) ([]string, error) {
 	var bkts []string
 	return bkts, db.View(func(tx *bbolt.Tx) error {
 		err := tx.ForEach(func(name []byte, _ *bbolt.Bucket) error {
@@ -65,8 +65,8 @@ func ListBuckets(db *bbolt.DB) ([]string, error) {
 	})
 }
 
-// SetBucket sets a new or existing bucket in the database.
-func SetBucket(db *bbolt.DB, bkt string, bmap map[string]string) error {
+// Set sets a new or existing bucket in the database.
+func Set(db *bbolt.DB, bkt string, bmap map[string]string) error {
 	return db.Update(func(tx *bbolt.Tx) error {
 		obj, err := tx.CreateBucketIfNotExists([]byte(bkt))
 		if err != nil {

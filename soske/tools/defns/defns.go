@@ -1,4 +1,4 @@
-package soske
+package defns
 
 import "fmt"
 
