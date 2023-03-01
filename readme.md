@@ -12,7 +12,7 @@ It's designed to be a simple, portable plaintext data-dumpster.
 Install Soske with `go install`...
 
 ```
-go install github.com/wirehaiku/Soske@latest
+go install github.com/wirehaiku/soske@latest
 ```
 
 ...or download the [latest release][rels] for your platform.

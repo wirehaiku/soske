@@ -1,4 +1,4 @@
-module github.com/wirehaiku/Soske
+module github.com/wirehaiku/soske
 
 go 1.20
 
