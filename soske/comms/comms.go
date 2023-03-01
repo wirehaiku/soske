@@ -10,6 +10,7 @@ type Command func(*sqlx.DB, []string) ([]string, error)
 var Commands = map[string]Command{
 	"get": GetCommand,
 	"lst": LstCommand,
+	"set": SetCommand,
 }
 
 // Run runs a Command with arguments against a database.
