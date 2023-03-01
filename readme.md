@@ -72,7 +72,7 @@ Delete each key if it exists, or do nothing:
 $ soske del alpha
 ```
 
-### `exp FILES...` (TODO)
+### `exp FILES...`
 
 Export the entire database as pretty-printed JSON to each file.
 
@@ -84,7 +84,7 @@ Export the entire database as pretty-printed JSON to each file.
 
 Import each JSON file into the database.
 
-```
+```bash
 # TODO: Decide import format.
 ```
 
