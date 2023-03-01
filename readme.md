@@ -19,7 +19,7 @@ go install github.com/wirehaiku/Soske@latest
 
 ## Configuration
 
-Soske stores all its data in a single [Bolt][bolt] database in either [`$XDG_CONFIG_HOME`][xdgs] or [`%APPDATA%`][appd], depending on your platform.
+Soske stores all its data in a single [SQLite][sqli] database in either [`$XDG_CONFIG_HOME`][xdgs] or [`%APPDATA%`][appd], depending on your platform.
 The database itself is an open standard and there are commands to easily import and export your data.
 
 ## Commands
@@ -72,46 +72,33 @@ Delete each key if it exists, or do nothing:
 $ soske del alpha
 ```
 
-### `exp FILES...`
+### `exp FILES...` (TODO)
 
 Export the entire database as pretty-printed JSON to each file.
 
-```
-$ soske exp test.json
-$ cat test.json
-{
-    "alpha": {
-        "body": "Aye aye aye!",
-        "hash": "929c3d93e2a04929d950ef633bca7465045527bee16efb71de7e30a68dd332b5",
-        "time": "943920000"
-    },
-    ...
-}
+```bash
+# TODO: Decide export format.
 ```
 
 ### `imp FILES...`
 
 Import each JSON file into the database.
-The JSON object must be a flat string-to-string dictionary.
 
 ```
-$ echo '{"alpha": "Aye aye aye!"}' > test.json
-$ soske imp test.json
-$ soske get alpha
-Aye aye aye!
+# TODO: Decide import format.
 ```
 
 ## Contributing
 
 - Please submit bug reports and feature requests to the [issue tracker][bugs].
-- Soske's only dependencies are [Bolt][bolt] (database) and [Testify][test] (unit testing). 
+- Soske's only dependencies are [SQLite][sqli] and [Testify][test]. 
 - The `extra` directory contains helper scripts for building and testing Soske.
 
 [appd]: https://ss64.com/nt/syntax-variables.html
-[bolt]: https://github.com/etcd-io/bbolt
 [bugs]: https://github.com/wirehaiku/Soske/issues
 [gver]: https://go.dev/doc/go1.20
 [rels]: https://github.com/wirehaiku/Soske/releases/latest
+[sqli]: https://www.sqlite.org/index.html
 [stvm]: https://wirehaiku.org/
 [test]: https://github.com/stretchr/testify
 [xdgs]: https://wiki.archlinux.org/title/XDG_Base_Directory
