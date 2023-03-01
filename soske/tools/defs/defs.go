@@ -5,10 +5,10 @@ import "fmt"
 
 const (
 	// VersionDate is the date of Soske's current version.
-	VersionDate = "2022-02-27"
+	VersionDate = "2022-03-01"
 
 	// VersionNums is the number of Soske's current version.
-	VersionNums = "0.0.0"
+	VersionNums = "0.1.0"
 )
 
 var (

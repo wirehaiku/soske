@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/wirehaiku/Soske/soske/tools/sqls"
-	"github.com/wirehaiku/Soske/soske/tools/test"
+	"github.com/wirehaiku/soske/soske/tools/sqls"
+	"github.com/wirehaiku/soske/soske/tools/test"
 )
 
 func TestOpen(t *testing.T) {

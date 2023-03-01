@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/wirehaiku/Soske/soske/tools/data"
-	"github.com/wirehaiku/Soske/soske/tools/test"
+	"github.com/wirehaiku/soske/soske/tools/data"
+	"github.com/wirehaiku/soske/soske/tools/test"
 )
 
 func TestSetCommand(t *testing.T) {

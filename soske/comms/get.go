@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/jmoiron/sqlx"
-	"github.com/wirehaiku/Soske/soske/tools/data"
+	"github.com/wirehaiku/soske/soske/tools/data"
 )
 
 // GetCommand returns the value of each existing key.

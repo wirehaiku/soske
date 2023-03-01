@@ -4,7 +4,7 @@ package test
 import (
 	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3"
-	"github.com/wirehaiku/Soske/soske/tools/sqls"
+	"github.com/wirehaiku/soske/soske/tools/sqls"
 )
 
 // DB returns an in-memory database populated with test data.

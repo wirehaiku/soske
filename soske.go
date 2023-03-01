@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/wirehaiku/Soske/soske/comms"
-	"github.com/wirehaiku/Soske/soske/tools/clui"
-	"github.com/wirehaiku/Soske/soske/tools/data"
-	"github.com/wirehaiku/Soske/soske/tools/defs"
-	"github.com/wirehaiku/Soske/soske/tools/sqls"
+	"github.com/wirehaiku/soske/soske/comms"
+	"github.com/wirehaiku/soske/soske/tools/clui"
+	"github.com/wirehaiku/soske/soske/tools/data"
+	"github.com/wirehaiku/soske/soske/tools/defs"
+	"github.com/wirehaiku/soske/soske/tools/sqls"
 )
 
 // die fatally prints a formatted string.
