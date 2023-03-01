@@ -3,7 +3,7 @@ package sqls
 
 // BasePragma is the baseline required database pragma.
 const BasePragma = `
-pragma encoding = 'UTF-8';
+pragma encoding = "UTF-8";
 pragma foreign_keys = ON;
 `
 
@@ -33,6 +33,6 @@ insert into Keys (name, init) values ("alpha", 100);
 insert into Keys (name, init) values ("bravo", 200);
 insert into Keys (name, init) values ("charlie", 300);
 insert into Vals (key, body, init) values ("alpha", "Alpha one.", 400);
-insert into Vals (key, body, init) values ("bravo", "Alpha two.", 500);
+insert into Vals (key, body, init) values ("alpha", "Alpha two.", 500);
 insert into Vals (key, body, init) values ("bravo", "Bravo one.", 600);
 `
