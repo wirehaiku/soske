@@ -8,43 +8,48 @@ import (
 )
 
 // Cmd is a user-executable command function.
-type Cmd func(*sqlx.DB, []string) string
+type Cmd func(*sqlx.DB, []string) []string
 
 // Cmds is a map of all existing commands.
 var Cmds = map[string]Cmd{
 	"get": GetCmd,
+	"lst": LstCmd,
+	"set": SetCmd,
 }
 
 // GetCmd prints the latest value of an existing key.
-func GetCmd(db *sqlx.DB, args []string) string {
+func GetCmd(db *sqlx.DB, args []string) []string {
 	var outs []string
 	for _, key := range args {
 		body := DbString(db, "select body from GoodVals where key=?", key)
 		outs = append(outs, body)
 	}
 
-	return strings.Join(outs, "\n")
+	return outs
 }
 
 // LstCmd prints a list of existing keys.
-func LstCmd(db *sqlx.DB, args []string) string {
-	var opts []string
-	for _, sub := range args {
-		if strings.HasPrefix(sub, "!") {
-			sub = strings.TrimLeft(sub, "!")
-			opts = append(opts, fmt.Sprintf("name not like '%%%s%%'", sub))
-		} else {
-			opts = append(opts, fmt.Sprintf("name like '%%%s%%'", sub))
+func LstCmd(db *sqlx.DB, args []string) []string {
+	if len(args) > 0 {
+		var opts []string
+		for _, sub := range args {
+			if strings.HasPrefix(sub, "!") {
+				sub = strings.TrimLeft(sub, "!")
+				opts = append(opts, fmt.Sprintf("name not like '%%%s%%'", sub))
+			} else {
+				opts = append(opts, fmt.Sprintf("name like '%%%s%%'", sub))
+			}
 		}
+
+		whr := strings.Join(opts, " and ")
+		return DbStrings(db, "select name from Goodkeys where "+whr)
 	}
 
-	like := strings.Join(opts, " and ")
-	names := DbStrings(db, "select name from GoodKeys where "+like)
-	return strings.Join(names, "\n")
+	return DbStrings(db, "select name from GoodKeys")
 }
 
 // SetCmd sets the value of a new or existing key.
-func SetCmd(db *sqlx.DB, args []string) string {
+func SetCmd(db *sqlx.DB, args []string) []string {
 	if len(args) < 2 {
 		Die("not enough arguments")
 	}
@@ -57,5 +62,5 @@ func SetCmd(db *sqlx.DB, args []string) string {
 		DbExecute(db, "insert into Vals (key, body) values (?, ?)", key, val)
 	}
 
-	return ""
+	return nil
 }

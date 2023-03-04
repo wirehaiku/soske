@@ -12,7 +12,7 @@ func TestGetCmd(t *testing.T) {
 
 	// success
 	outs := GetCmd(db, []string{"alpha", "bravo"})
-	assert.Equal(t, "Alpha two.\nBravo one.", outs)
+	assert.Equal(t, []string{"Alpha two.", "Bravo one."}, outs)
 }
 
 func TestLstCmd(t *testing.T) {
@@ -21,7 +21,7 @@ func TestLstCmd(t *testing.T) {
 
 	// success
 	outs := LstCmd(db, []string{"a", "!charlie"})
-	assert.Equal(t, "alpha\nbravo", outs)
+	assert.Equal(t, []string{"alpha", "bravo"}, outs)
 }
 
 func TestSetCmd(t *testing.T) {
