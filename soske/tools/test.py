@@ -23,8 +23,8 @@ insert into Keys values ('empty_key', false, 4000);
 
 
 @pytest.fixture(scope="function")
-def db():
-    db = sqlite3.connect(":memory:")
-    db.row_factory = sqlite3.Row
-    db.executescript(sqls.PRAGMA + sqls.SCHEMA + TEST_SCHEMA)
-    return db
+def conn():
+    conn = sqlite3.connect(":memory:")
+    conn.row_factory = sqlite3.Row
+    conn.executescript(sqls.PRAGMA + sqls.SCHEMA + TEST_SCHEMA)
+    return conn
