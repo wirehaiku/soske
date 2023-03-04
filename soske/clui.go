@@ -1,6 +1,7 @@
 package soske
 
 import (
+	"database/sql"
 	"fmt"
 	"os"
 )
@@ -14,7 +15,7 @@ func Die(str string, args ...any) {
 // Try fatally prints a formatted string on a non-nil error. If Debug is true, the error
 // is also printed.
 func Try(err error, str string, args ...any) {
-	if err != nil {
+	if err != nil && err != sql.ErrNoRows {
 		fmt.Printf(fmt.Sprintf("Error: %s.\n", str), args...)
 		if Debug {
 			fmt.Printf("Debug: %s.\n", err.Error())
