@@ -1,2 +1,5 @@
-*.db
-*.db-journal
+*.pyc
+.mypy_cache
+.pytest_cache
+.virtualenv
+__pycache__
