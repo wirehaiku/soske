@@ -42,7 +42,7 @@ def run():
     Return a function that returns the status code and output of a Click command.
     """
 
-    def cmdfunc(conn: sqlite3.Connection, args: list[str]) -> tuple[int, str]:
+    def cmdfunc(conn: sqlite3.Connection, *args: str) -> tuple[int, str]:
         runner = click.testing.CliRunner()
         result = runner.invoke(app.soske, args, obj=conn)
         return result.exit_code, result.output
