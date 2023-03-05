@@ -19,9 +19,9 @@ def set_(conn: sqlite3.Connection, key: str, values: str):
     Set the value of a new or existing key.
     """
 
+    now = time.time()
     key = key.lower()
     val = "\n".join(values)
-    now = time.time()
     row = data.row(conn, "select * from GoodVals where key=?", key)
 
     if not row or row["body"] != val:
