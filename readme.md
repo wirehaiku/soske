@@ -59,13 +59,19 @@ three
 
 ## Contributing
 
-- Please submit bug reports and feature requests to the [issue tracker][bugs].
-- Soske's only dependencies are [SQLite][sqli], [Click][clck] and [Testify][test]. 
+Please submit bug reports and feature requests to the [issue tracker][bugs], thank you.
+
+## Credits
+
+Soske is made possible by these third-party libraries:
+
+- [click](https://click.palletsprojects.com)
+- [mypy](https://www.mypy-lang.org/)
+- [py.test](https://docs.pytest.org/)
+- [pytest-mypy](https://pypi.org/project/pytest-mypy/)
 
 [bugs]: https://github.com/wirehaiku/Soske/issues
-[clck]: https://click.palletsprojects.com/en/8.1.x/
 [rels]: https://github.com/wirehaiku/Soske/releases/latest
 [p310]: https://www.python.org/downloads/release/python-3100/
 [sqli]: https://www.sqlite.org/index.html
 [stvm]: https://wirehaiku.org/
-[test]: https://github.com/stretchr/testify
