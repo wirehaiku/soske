@@ -3,7 +3,6 @@ Tests for 'soske.comms.delete'.
 """
 
 from soske.comms import delete
-from soske.tools.test import conn, run
 
 
 def test_delete(conn, run):

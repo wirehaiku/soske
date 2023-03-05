@@ -36,3 +36,17 @@ create view GoodVals as
     select * from Vals where (select dead from Keys where name=key)=false
     order by init desc;
 """
+
+TEST_SCHEMA = """
+insert into Keys values ('alpha', false,        1000.1);
+insert into Vals values ('alpha', 'Alpha one.', 1000.2);
+insert into Vals values ('alpha', 'Alpha two.', 1000.3);
+
+insert into Keys values ('bravo', false,        2000.1); 
+insert into Vals values ('bravo', 'Bravo one.', 2000.2);
+
+insert into Keys values ('dead_key', true,        3000.1);
+insert into Vals values ('dead_key', 'Dead key.', 3000.2);
+
+insert into Keys values ('empty_key', false, 4000.1);
+"""

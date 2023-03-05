@@ -12,6 +12,6 @@ def test_schema():
     conn = sqlite3.connect(":memory:")
 
     # success
-    conn.executescript(sqls.PRAGMA + sqls.SCHEMA)
+    conn.executescript(sqls.PRAGMA + sqls.SCHEMA + sqls.TEST_SCHEMA)
     curs = conn.execute("select count(*) from SQLITE_SCHEMA")
     assert curs.fetchone()[0] != 0

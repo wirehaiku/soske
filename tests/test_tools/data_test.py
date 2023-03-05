@@ -3,7 +3,6 @@ Tests for 'soske.tools.data'.
 """
 
 from soske.tools import data, sqls
-from soske.tools.test import conn
 
 
 def test_open(tmp_path):

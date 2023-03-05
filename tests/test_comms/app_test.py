@@ -4,7 +4,6 @@ Testss for 'soske.comms.app'.
 
 import click
 from soske.comms import app
-from soske.tools.test import conn, run
 
 
 def test_soske(conn, run):

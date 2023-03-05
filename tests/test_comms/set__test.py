@@ -3,7 +3,6 @@ Tests for 'soske.comms.set'.
 """
 
 from soske.comms import set_
-from soske.tools.test import conn, run
 
 
 def test_set_(conn, run):
