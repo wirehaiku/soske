@@ -37,11 +37,26 @@ charlie
 
 ### `get KEY`
 
-Print the value of a key (if it exists):
+Print the value of a key (if it exists).
 
 ```
 $ soske get alpha
 Aye aye aye! 
+```
+
+### `delete KEY`
+
+Delete a key and its values (if it exists).
+By default the key is soft-deleted, meaning it is *marked* as deleted in the database but no actual data is lost.
+
+- Use the `-h --hard` flag to hard-delete and actually destroy the key's data.
+- Use the `-y --yes` flag to bypass the "Are you sure?" prompt.
+
+```
+$ soske delete alpha
+$ soske delete bravo --hard
+Are you sure you want to hard-delete 'bravo'? [y/N]: y
+Key deleted.
 ```
 
 ### `set KEY VALUES...`

@@ -11,7 +11,7 @@ PATH_TYPE = click.Path(dir_okay=False, writable=True)
 
 
 @click.group()
-@click.option("--path", default="~/.soske", type=PATH_TYPE)
+@click.option("--path", default="~/.soske", help="Database path.", type=PATH_TYPE)
 @click.pass_context
 def soske(ctx: click.Context, path: str):
     """
