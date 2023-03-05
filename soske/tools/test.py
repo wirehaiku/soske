@@ -10,17 +10,17 @@ from soske.comms import app
 from soske.tools import sqls
 
 TEST_SCHEMA = """
-insert into Keys values ('alpha', false, 1000);
-insert into Vals values ('alpha', 'Alpha one.', 1001);
-insert into Vals values ('alpha', 'Alpha two.', 1002);
+insert into Keys values ('alpha', false,        1000.1);
+insert into Vals values ('alpha', 'Alpha one.', 1000.2);
+insert into Vals values ('alpha', 'Alpha two.', 1000.3);
 
-insert into Keys values ('bravo', false, 2000); 
-insert into Vals values ('bravo', 'Bravo one.', 2001);
+insert into Keys values ('bravo', false,        2000.1); 
+insert into Vals values ('bravo', 'Bravo one.', 2000.2);
 
-insert into Keys values ('dead_key', true, 3000);
-insert into Vals values ('dead_key', 'Dead key.', 3001);
+insert into Keys values ('dead_key', true,        3000.1);
+insert into Vals values ('dead_key', 'Dead key.', 3000.2);
 
-insert into Keys values ('empty_key', false, 4000);
+insert into Keys values ('empty_key', false, 4000.1);
 """
 
 
@@ -45,6 +45,9 @@ def run():
     def cmdfunc(conn: sqlite3.Connection, *args: str) -> tuple[int, str]:
         runner = click.testing.CliRunner()
         result = runner.invoke(app.soske, args, obj=conn)
+        if result.exception:
+            raise result.exception
+
         return result.exit_code, result.output
 
     return cmdfunc

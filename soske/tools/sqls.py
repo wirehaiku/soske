@@ -9,15 +9,15 @@ pragma foreign_keys = ON;
 
 SCHEMA = """
 create table Keys (
-    name text    not null unique,
-    dead boolean not null default false,
-    init integer not null default (unixepoch())
+    name text not null unique,
+    dead bool not null,
+    init real not null
 );
 
 create table Vals (
-    key  text    not null references Keys(name),
-    body text    not null,
-    init integer not null default (unixepoch())
+    key  text not null references Keys(name),
+    body text not null,
+    init real not null
 );
 
 create view DeadKeys as

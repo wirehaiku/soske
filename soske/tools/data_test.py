@@ -23,7 +23,7 @@ def test_open(tmp_path):
 
 def test_exec(conn):
     # success
-    data.exec(conn, "insert into Keys (name) values ('test')")
+    data.exec(conn, "insert into Keys values ('test', false, 123)")
     curs = conn.execute("select * from Keys where name=?", ["test"])
     assert curs.fetchone()["name"] == "test"
 

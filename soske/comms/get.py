@@ -17,5 +17,6 @@ def get(conn: sqlite3.Connection, key: str):
     Get the latest value of an existing key.
     """
 
-    if row := data.row(conn, "select * from GoodVals where key=?", key.lower()):
+    key = key.lower()
+    if row := data.row(conn, "select * from GoodVals where key=?", key):
         click.echo(row["body"])
