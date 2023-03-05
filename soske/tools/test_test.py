@@ -7,7 +7,7 @@ import sqlite3
 from soske.tools import sqls, test
 
 
-def test_module():
+def test_schema():
     # setup
     conn = sqlite3.connect(":memory:")
 
